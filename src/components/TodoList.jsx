@@ -45,6 +45,13 @@ const TodoList = () => {
     setTodos(updatedTodos);
   };
 
+  const handleDelete = (id) => {
+    const filteredTodo = todos.filter((todo) => {
+      return todo.id !== id ? true : false;
+    });
+
+    setTodos(filteredTodo);
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -54,10 +61,22 @@ const TodoList = () => {
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
-            <p>
-              {todo.text} - {String(todo.completed)}
+            <p
+              style={{
+                textDecoration: todo.completed ? 'line-through' : 'none',
+              }}
+            >
+              {todo.text} -{' '}
+              {todo.completed ? <span>완료</span> : <span>미완료</span>}
             </p>
             <button onClick={() => toggleCompleted(todo.id)}>완료</button>
+            <button
+              onClick={() => {
+                handleDelete(todo.id);
+              }}
+            >
+              삭제
+            </button>
           </li>
         ))}
       </ul>
