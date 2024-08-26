@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import TodoItem from './TodoItem';
 
 const TodoList = ({ todos, toggleCompleted, handleDelete }) => {
-  console.log(todos);
   return (
     <ul>
       <TodoItem
