@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import TodoItem from './TodoItem';
+import { TodoContext } from '../todoContext/TodoContext';
+import styled from 'styled-components';
 
-const TodoList = ({ todos, toggleCompleted, handleDelete }) => {
+const TodoList = () => {
   return (
-    <ul>
-      <TodoItem
-        toggleCompleted={toggleCompleted}
-        handleDelete={handleDelete}
-        todos={todos}
-      />
-    </ul>
+    <UlStyle>
+      <TodoItem />
+    </UlStyle>
   );
 };
 
 export default TodoList;
+
+const UlStyle = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+`;
