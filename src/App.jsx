@@ -1,16 +1,8 @@
 import React from 'react';
-import TodoContainer from './components/TodoContainer';
-import Layout from './components/Layout';
-import TodoProvider from './todoContext/TodoContext';
+import Router from './components/Router';
 
 const App = () => {
-  return (
-    <TodoProvider>
-      <Layout>
-        <TodoContainer />
-      </Layout>
-    </TodoProvider>
-  );
+  return <Router />;
 };
 
 export default App;

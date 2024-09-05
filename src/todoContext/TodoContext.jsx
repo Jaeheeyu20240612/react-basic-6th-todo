@@ -1,70 +1,40 @@
 import React, { createContext, useState } from 'react';
+import { TODO_SAMPLE } from '../constants/todo-sample';
 
 export const TodoContext = createContext(null);
 
 const TodoProvider = ({ children }) => {
-  const SAMPLE_TODOS = [
-    { id: 1, text: 'Buy milk', completed: false },
-    { id: 2, text: 'Clean the house', completed: false },
-    { id: 3, text: 'Go for a run', completed: false },
-    { id: 4, text: 'Finish homework', completed: false },
-    { id: 5, text: 'Call mom', completed: false },
-    { id: 6, text: 'Buy groceries', completed: false },
-    { id: 7, text: 'Walk the dog', completed: false },
-    { id: 8, text: 'Read a book', completed: false },
-    { id: 9, text: 'Do laundry', completed: false },
-    { id: 10, text: 'Write code', completed: false },
-  ];
-  const [todos, setTodos] = useState(SAMPLE_TODOS);
+  const [todos, setTodos] = useState(TODO_SAMPLE);
 
-  const [inputTodo, setInputTodo] = useState('');
+  const addTodo = (todo) => {
+    setTodos([todo, ...todos]);
+  };
 
-  const handleInputChange = (event) => {
-    setInputTodo(event.target.value);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!inputTodo.trim()) {
-      return;
-    }
-    setTodos([
-      { id: crypto.randomUUID(), text: inputTodo, completed: false },
-      ...todos,
-    ]);
-    setInputTodo('');
-  };
-  const toggleCompleted = (id) => {
-    const updatedTodos = todos.map((todo) => {
+  const onDelete = (id) => {
+    const filteredTodos = todos.filter((todo) => {
       if (todo.id === id) {
-        const newTodo = {
+        return false;
+      }
+      return true;
+    });
+    setTodos(filteredTodos);
+  };
+
+  const onToggleCompleted = (id) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return {
           ...todo,
-          completed: !todo.completed,
+          isCompleted: !todo.isCompleted,
         };
-        return newTodo;
       }
       return todo;
     });
-    setTodos(updatedTodos);
+    setTodos(newTodos);
   };
-
-  const handleDelete = (id) => {
-    const filteredTodo = todos.filter((todo) => {
-      return todo.id !== id ? true : false;
-    });
-
-    setTodos(filteredTodo);
-  };
-
   return (
     <TodoContext.Provider
-      value={{
-        todos,
-        inputTodo,
-        handleInputChange,
-        handleSubmit,
-        toggleCompleted,
-        handleDelete,
-      }}
+      value={{ todos, addTodo, onToggleCompleted, onDelete }}
     >
       {children}
     </TodoContext.Provider>
