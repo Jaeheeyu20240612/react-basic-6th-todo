@@ -1,40 +1,59 @@
-import React, { createContext, useState } from 'react';
-import { TODO_SAMPLE } from '../constants/todo-sample';
+import React, { createContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { todoClient } from '../api/todoClient';
 
 export const TodoContext = createContext(null);
 
 const TodoProvider = ({ children }) => {
-  const [todos, setTodos] = useState(TODO_SAMPLE);
+  const [todos, setTodos] = useState([]);
+  const navigate = useNavigate();
 
-  const addTodo = (todo) => {
-    setTodos([todo, ...todos]);
+  // 서버에서 todos 가져오기
+  const fetchTodos = async () => {
+    const { data } = await todoClient.get('/');
+    setTodos(data);
+  };
+  // todo 추가하기
+  const addTodos = async (newTodoObj) => {
+    await todoClient.post('/', newTodoObj);
+
+    fetchTodos();
   };
 
-  const onDelete = (id) => {
-    const filteredTodos = todos.filter((todo) => {
-      if (todo.id === id) {
-        return false;
-      }
-      return true;
+  // 비동기 삭제
+  const handleDelete = async (id) => {
+    await todoClient.delete(`/${id}`);
+
+    fetchTodos();
+
+    navigate('/');
+  };
+  // 비동기 업데이트
+  const toggleComplete = async (id, completed) => {
+    await todoClient.patch(`/${id}`, {
+      completed,
     });
-    setTodos(filteredTodos);
+
+    fetchTodos();
   };
 
-  const onToggleCompleted = (id) => {
-    const newTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return {
-          ...todo,
-          isCompleted: !todo.isCompleted,
-        };
-      }
-      return todo;
-    });
-    setTodos(newTodos);
-  };
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const pendingTodos = todos.filter((todo) => !todo.completed);
+  const completedTodos = todos.filter((todo) => todo.completed);
   return (
     <TodoContext.Provider
-      value={{ todos, addTodo, onToggleCompleted, onDelete }}
+      value={{
+        fetchTodos,
+        todos,
+        addTodos,
+        toggleComplete,
+        handleDelete,
+        pendingTodos,
+        completedTodos,
+      }}
     >
       {children}
     </TodoContext.Provider>

@@ -1,0 +1,52 @@
+{
+  "todos": [
+    {
+      "id": "4",
+      "text": "Finish homework",
+      "completed": true
+    },
+    {
+      "id": "5",
+      "text": "Call mom",
+      "completed": true
+    },
+    {
+      "id": "6",
+      "text": "Buy groceries",
+      "completed": false
+    },
+    {
+      "id": "8",
+      "text": "Read a book",
+      "completed": false
+    },
+    {
+      "id": "9",
+      "text": "Do laundry",
+      "completed": true
+    },
+    {
+      "id": "3bd6e061-a807-406e-9af1-916353caea54",
+      "text": "ㄹㅇㅁㄹ",
+      "isCompleted": false,
+      "completed": true
+    },
+    {
+      "id": "10f6fe1b-1a4e-4fdb-aa63-bf60b01c4066",
+      "text": "ㅇㅁㄹㄶㄴ",
+      "isCompleted": false
+    },
+    {
+      "id": "f224fd97-3bbd-4d74-808c-43929ed689c9",
+      "text": "ㄴㅊ",
+      "isCompleted": false,
+      "completed": true
+    },
+    {
+      "id": "b15b241c-8ca5-4ffa-8ed9-cdbff0d70fab",
+      "text": "ㅗㅗ",
+      "isCompleted": false,
+      "completed": true
+    }
+  ]
+}

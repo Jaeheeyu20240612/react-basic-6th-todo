@@ -22,14 +22,12 @@ const LayoutMain = styled.main`
   justify-content: center;
   align-items: center;
   width: 70%;
-  overflow: hidden;
-
   border-radius: 13px;
   margin: 1em auto;
 `;
 
 const RootLayoutContents = styled.div`
-  max-width: 768px;
+  max-width: 1024px;
   margin: 0 auto;
   padding: 20px;
 `;
