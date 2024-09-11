@@ -1,12 +1,16 @@
-import React, { useContext } from 'react';
-import { TodoContext } from '../../todoContext/TodoContext';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import TodoItem from './TodoItem';
+import { useQuery } from '@tanstack/react-query';
+import { fetchTodos } from '../../api/todoClient';
 
-const TodoDetail = () => {
-  const navigate = useNavigate();
+const TodoDetail = ({ id }) => {
   const location = useLocation();
-  const { todos } = useContext(TodoContext);
+
+  const { data: todos } = useQuery({
+    queryKey: ['todos'],
+    queryFn: fetchTodos,
+  });
+
   const queryParameter = new URLSearchParams(location.search);
   const filtered = queryParameter.get('filter');
 

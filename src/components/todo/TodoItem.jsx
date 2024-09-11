@@ -1,11 +1,29 @@
-import React, { useContext } from 'react';
-import { TodoContext } from '../../todoContext/TodoContext';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Buttons } from '../ui/Buttons';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { handleDelete, toggleComplete } from '../../api/todoClient';
 
 const TodoItem = ({ todo }) => {
-  const { toggleComplete, handleDelete } = useContext(TodoContext);
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: (id) => handleDelete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['todos'],
+      });
+    },
+  });
+
+  const { mutate: handleToggle } = useMutation({
+    mutationFn: ({ id, completed }) => toggleComplete(id, completed),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['todos'],
+      });
+    },
+  });
+
   return (
     <Lists key={todo.id}>
       <div style={{ marginRight: 'auto' }}>
@@ -19,7 +37,10 @@ const TodoItem = ({ todo }) => {
         <Buttons
           color='#e7582b'
           onClick={() => {
-            toggleComplete(todo.id, !todo.completed);
+            handleToggle({
+              id: todo.id,
+              completed: !todo.completed,
+            });
           }}
         >
           {todo.completed ? '취소' : '완료'}
@@ -27,7 +48,7 @@ const TodoItem = ({ todo }) => {
         <Buttons
           color='#582be7'
           onClick={() => {
-            handleDelete(todo.id);
+            mutate(todo.id);
           }}
         >
           삭제

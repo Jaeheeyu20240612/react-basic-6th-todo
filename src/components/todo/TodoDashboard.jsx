@@ -1,11 +1,16 @@
-import React, { useContext } from 'react';
 import { CalendarCheck, Monitor, Video } from 'lucide-react';
 import styled from 'styled-components';
-import { TodoContext } from '../../todoContext/TodoContext';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { fetchTodos } from '../../api/todoClient';
 
 const TodoDashboard = () => {
-  const { completedTodos, pendingTodos, todos } = useContext(TodoContext);
+  const { data: todos } = useQuery({
+    queryKey: ['todos'],
+    queryFn: fetchTodos,
+  });
+
+  // const { completedTodos, pendingTodos, todos } = useContext(TodoContext);
 
   return (
     <DashboardSection>
@@ -20,7 +25,7 @@ const TodoDashboard = () => {
               <CalendarCheck size={16} />
             </LucidIcon2>
             <div>
-              <p style={{ fontSize: '1.5em' }}>{todos.length}</p>
+              <p style={{ fontSize: '1.5em' }}>{todos?.length}</p>
               <p>All Task</p>
             </div>
           </LucidIcon>
@@ -33,7 +38,7 @@ const TodoDashboard = () => {
           <LucidIcon>
             <Monitor size={16} />
             <div>
-              <p style={{ fontSize: '1.5em' }}>{completedTodos.length}</p>
+              <p style={{ fontSize: '1.5em' }}>{todos?.length}</p>
               <p>Completed</p>
             </div>
           </LucidIcon>
@@ -42,7 +47,7 @@ const TodoDashboard = () => {
           <LucidIcon>
             <Video size={16} />
             <div>
-              <p style={{ fontSize: '1.5em' }}>{pendingTodos.length}</p>
+              <p style={{ fontSize: '1.5em' }}>{todos?.length}</p>
               <p> pending</p>
             </div>
           </LucidIcon>
