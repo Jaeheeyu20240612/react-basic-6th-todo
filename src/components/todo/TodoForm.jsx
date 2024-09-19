@@ -14,6 +14,7 @@ const TodoForm = () => {
       queryClient.invalidateQueries({
         queryKey: ['todos'],
       });
+      setText('');
     },
   });
 

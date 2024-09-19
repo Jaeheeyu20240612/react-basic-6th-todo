@@ -1,26 +1,26 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import TodoItem from './TodoItem';
 import { useQuery } from '@tanstack/react-query';
-import { fetchTodos } from '../../api/todoClient';
+import { getTodos } from '../../api/todoClient';
+import { useTodoQuery } from '../../hooks/useTodoQuery';
 
-const TodoDetail = ({ id }) => {
+const TodoDetail = () => {
+  const { id } = useParams();
   const location = useLocation();
-
-  const { data: todos } = useQuery({
-    queryKey: ['todos'],
-    queryFn: fetchTodos,
-  });
-
   const queryParameter = new URLSearchParams(location.search);
   const filtered = queryParameter.get('filter');
 
+  const { data: allTodos } = useTodoQuery();
+  const { data: completedTodos } = useTodoQuery('completed');
+  const { data: pendingTodos } = useTodoQuery('pending');
+
   let detailTodos = [];
   if (filtered === 'completed') {
-    detailTodos = todos.filter((todo) => todo.completed);
+    detailTodos = allTodos.filter((todo) => todo.completed);
   } else if (filtered === 'pending') {
-    detailTodos = todos.filter((todo) => todo.completed === false);
+    detailTodos = allTodos.filter((todo) => todo.completed === false);
   } else {
-    detailTodos = todos;
+    detailTodos = allTodos;
   }
 
   if (!detailTodos) {

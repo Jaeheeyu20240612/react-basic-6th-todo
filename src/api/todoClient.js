@@ -1,14 +1,23 @@
 import axios from 'axios';
 
 export const todoClient = axios.create({
-  baseURL: 'http://localhost:4000/todos',
+  baseURL: 'http://localhost:3000/todos',
 });
 
-// 서버에서 todos 가져오기
-export const fetchTodos = async () => {
-  const { data } = await todoClient.get('/');
+export const getTodos = async (filter) => {
+  const searchParams = new URLSearchParams();
+
+  if (filter === 'completed') {
+    searchParams.append('completed', true);
+  }
+  if (filter === 'pending') {
+    searchParams.append('completed', false);
+  }
+
+  const { data } = await todoClient.get(`?${searchParams.toString()}`);
   return data;
 };
+
 // todo 추가하기
 export const postTodo = async (newTodoObj) => {
   const { data } = await todoClient.post('/', newTodoObj);
@@ -18,6 +27,7 @@ export const postTodo = async (newTodoObj) => {
 
 // 비동기 삭제
 export const handleDelete = async (id) => {
+  console.log(`Deleting todo with URL: /todos/${id}`);
   const { data } = await todoClient.delete(`/${id}`);
   return data;
 };

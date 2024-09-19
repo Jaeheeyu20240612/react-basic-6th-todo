@@ -1,39 +1,15 @@
 import TodoItem from './TodoItem';
 import styled from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { fetchTodos } from '../../api/todoClient';
+import { useTodoFilterQuery } from '../../hooks/useTodoQuery';
 
 const TodoList = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  // const { todos, pendingTodos, completedTodos } = useContext(TodoContext);
-  const {
-    data: todos,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['todos'],
-    queryFn: fetchTodos,
-  });
+  const { data: todos, isLoading, error } = useTodoFilterQuery();
   if (isLoading) {
     return <div>Loading...</div>;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  const filter = searchParams.get('filter');
-  // const filteredTodos =
-  //   filter === 'completed'
-  //     ? completedTodos
-  //     : filter === 'active'
-  //     ? pendingTodos
-  //     : todos;
-
-  // const updateFilter = (newfilter) => {
-  //   setSearchParams({ filter: newfilter });
-  // };
 
   return (
     <TodoLists>

@@ -1,33 +1,19 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Buttons } from '../ui/Buttons';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { handleDelete, toggleComplete } from '../../api/todoClient';
+import {
+  useDeleteTodoMutation,
+  useToggleTodoMutation,
+} from '../../hooks/useTodoMutation';
 
 const TodoItem = ({ todo }) => {
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: (id) => handleDelete(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['todos'],
-      });
-    },
-  });
-
-  const { mutate: handleToggle } = useMutation({
-    mutationFn: ({ id, completed }) => toggleComplete(id, completed),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['todos'],
-      });
-    },
-  });
+  const { mutateAsync: deleteTodo } = useDeleteTodoMutation();
+  const { mutate: handleToggle } = useToggleTodoMutation();
 
   return (
     <Lists key={todo.id}>
       <div style={{ marginRight: 'auto' }}>
-        <TaskLink to={`/${todo.id}`}>
+        <TaskLink to={`detail/id=${todo.id}`}>
           <p>{todo.text}</p>
           <p>{todo.completed ? '완료' : '미완료'}</p>
         </TaskLink>
@@ -47,8 +33,8 @@ const TodoItem = ({ todo }) => {
         </Buttons>
         <Buttons
           color='#582be7'
-          onClick={() => {
-            mutate(todo.id);
+          onClick={async () => {
+            await deleteTodo(todo.id);
           }}
         >
           삭제
