@@ -1,32 +1,29 @@
 import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
+import useThemeStore from '../../store/useThemeStore';
+import DarkModeButton from '../todo/DarkModeButton';
 
 const RootLayout = () => {
+  const { darkMode } = useThemeStore();
   return (
-    <LayoutMain>
-      <RootLayoutContents>
+    <main
+      className={`${
+        darkMode
+          ? 'bg-black flex flex-col min-h-full justify-center items-center w-[7/10] border-3 my-1 mx-auto'
+          : 'bg-[#f7f6f9] flex flex-col min-h-full justify-center items-center w-[7/10] border-3 my-1 mx-auto'
+      }`}
+    >
+      <div
+        className={`${
+          darkMode
+            ? 'bg-black max-w-[1024px] mx-auto p-5'
+            : 'max-w-[1024px] mx-auto p-5'
+        }`}
+      >
         <Outlet />
-      </RootLayoutContents>
-    </LayoutMain>
+      </div>
+      <DarkModeButton />
+    </main>
   );
 };
 
 export default RootLayout;
-
-const LayoutMain = styled.main`
-  background-color: #f7f6f9;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-  border-radius: 13px;
-  margin: 1em auto;
-`;
-
-const RootLayoutContents = styled.div`
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 20px;
-`;
