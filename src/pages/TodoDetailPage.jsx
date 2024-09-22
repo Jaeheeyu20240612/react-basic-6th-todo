@@ -1,20 +1,19 @@
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TodoDetail from '../components/todo/TodoDetail';
-import styled from 'styled-components';
-import { Buttons } from '../components/ui/Buttons';
+import useThemeStore from '../store/useThemeStore';
 
 const TodoDetailPage = () => {
+  const { darkmode } = useThemeStore;
   return (
-    <div>
+    <div className='w-full'>
       <TodoDetail />
       <Link to='/'>
-        <Buttons>목록으로</Buttons>
+        <button className={`btn ${darkmode ? 'btn-dark' : 'btn-light'} mt-4`}>
+          목록으로
+        </button>
       </Link>
     </div>
   );
 };
 
 export default TodoDetailPage;
-
-const ToListButton = styled.button``;

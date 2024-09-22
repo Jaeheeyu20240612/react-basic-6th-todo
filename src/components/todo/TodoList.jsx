@@ -1,5 +1,4 @@
 import TodoItem from './TodoItem';
-import styled from 'styled-components';
 import { useTodoFilterQuery } from '../../hooks/useTodoQuery';
 
 const TodoList = () => {
@@ -12,27 +11,14 @@ const TodoList = () => {
   }
 
   return (
-    <TodoLists>
+    <ul className='flex flex-col gap-4'>
       {todos.map((todo) => (
-        <TodoListContent key={todo.id}>
+        <li className='flew flex-row p-4 bg-white rounded-lg' key={todo.id}>
           <TodoItem todo={todo} />
-        </TodoListContent>
+        </li>
       ))}
-    </TodoLists>
+    </ul>
   );
 };
 
 export default TodoList;
-
-const TodoLists = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-`;
-export const TodoListContent = styled.li`
-  display: flex;
-  flex-direction: row;
-  padding: 1em;
-  background-color: white;
-  border-radius: 9px;
-`;

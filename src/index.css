@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+  @apply p-[10px] font-bold rounded-md cursor-pointer mr-[10px];
+}
+
+.btn-dark {
+  @apply bg-white text-black;
+}
+
+.btn-light {
+  @apply bg-black text-white;
+}

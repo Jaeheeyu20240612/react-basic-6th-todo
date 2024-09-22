@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useThemeStore from '../../store/useThemeStore';
+import { ToggleLeft, ToggleRight } from 'lucide-react';
 
 const DarkModeButton = () => {
   const { darkMode, toggleDarkMode } = useThemeStore();
@@ -14,16 +15,17 @@ const DarkModeButton = () => {
 
   return (
     <div>
-      <button
-        className={`${
-          darkMode
-            ? 'fixed left-4 bottom-4 border border-white text-white rounded-md py-3 px-2'
-            : 'fixed left-4 bottom-4 border border-black rounded-md py-3 px-2'
-        }`}
-        onClick={toggleDarkMode}
-      >
-        스위치
-      </button>
+      {darkMode ? (
+        <ToggleRight
+          className='w-11 h-11 text-white fixed left-4 bottom-4'
+          onClick={toggleDarkMode}
+        />
+      ) : (
+        <ToggleLeft
+          className='w-11 h-11 text-black fixed left-4 bottom-4'
+          onClick={toggleDarkMode}
+        />
+      )}
     </div>
   );
 };

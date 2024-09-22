@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { Buttons } from '../ui/Buttons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postTodo } from '../../api/todoClient';
 import useThemeStore from '../../store/useThemeStore';
@@ -39,11 +37,7 @@ const TodoForm = () => {
         onChange={(e) => setText(e.target.value)}
       />
       <button
-        className={`${
-          darkMode
-            ? 'p-[10px] bg-white text-bold text-black rounded-md cursor-pointer mr-[10px]'
-            : 'p-[10px] bg-black text-bold text-white rounded-md cursor-pointer mr-[10px]'
-        }`}
+        className={`btn ${darkMode ? 'btn-dark' : 'btn-light'}`}
         type='submit'
       >
         추가

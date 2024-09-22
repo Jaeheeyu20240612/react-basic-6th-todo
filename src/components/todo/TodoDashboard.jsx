@@ -9,65 +9,50 @@ const TodoDashboard = () => {
   const { data: pendingTodos } = useTodoQuery('pending');
 
   return (
-    <DashboardSection>
-      <TodoDashboardHeader>
+    <section className='w-full flex flex-col gap-2'>
+      <header>
         <h1>Todo Dashboard</h1>
-      </TodoDashboardHeader>
+      </header>
 
-      <DashboardCardList>
+      <div className='flex gap-[10px]'>
         <DashboardCard $flex='2' $color='#e7582b' to={'/detail'}>
-          <LucidIcon>
-            <LucidIcon2>
-              <CalendarCheck size={16} />
-            </LucidIcon2>
-            <div>
-              <p style={{ fontSize: '1.5em' }}>{allTodos?.length}</p>
-              <p>All Task</p>
-            </div>
-          </LucidIcon>
+          <div>
+            <CalendarCheck size={16} />
+          </div>
+          <div className='flex flex-col gap-[4em]'>
+            <p style={{ fontSize: '1.5em' }}>{allTodos?.length}</p>
+            <p>All Task</p>
+          </div>
         </DashboardCard>
         <DashboardCard
           $flex='1'
           $color='#582be7'
           to={'/detail?filter=completed'}
         >
-          <LucidIcon>
+          <div className='flex flex-col gap-[4em]'>
             <Monitor size={16} />
             <div>
               <p style={{ fontSize: '1.5em' }}>{completedTodos?.length}</p>
               <p>Completed</p>
             </div>
-          </LucidIcon>
+          </div>
         </DashboardCard>
         <DashboardCard $flex='1' $color='#242424' to={'/detail?filter=pending'}>
-          <LucidIcon>
+          <div className='flex flex-col gap-[4em]'>
             <Video size={16} />
             <div>
               <p style={{ fontSize: '1.5em' }}>{pendingTodos?.length}</p>
               <p> pending</p>
             </div>
-          </LucidIcon>
+          </div>
         </DashboardCard>
-      </DashboardCardList>
-    </DashboardSection>
+      </div>
+    </section>
   );
 };
 
 export default TodoDashboard;
 
-const DashboardSection = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-`;
-
-const TodoDashboardHeader = styled.div``;
-
-const DashboardCardList = styled.div`
-  display: flex;
-  gap: 10px;
-`;
 const DashboardCard = styled(Link)`
   display: flex;
   flex: ${(props) => props.$flex};
@@ -81,17 +66,4 @@ const DashboardCard = styled(Link)`
   border-radius: 13px;
   color: white;
   font-size: 10px;
-`;
-const LucidIcon = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4em;
-`;
-
-const LucidIcon2 = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
 `;

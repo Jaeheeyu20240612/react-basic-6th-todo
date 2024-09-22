@@ -11,17 +11,20 @@ const TodoItem = ({ todo }) => {
   const { mutate: handleToggle } = useToggleTodoMutation();
 
   return (
-    <Lists key={todo.id}>
+    <li className='w-full flex flex-fow items-center' key={todo.id}>
       <div style={{ marginRight: 'auto' }}>
-        <TaskLink to={`detail/id=${todo.id}`}>
+        <Link
+          className='flex flex-row gap-[1em] hover:underline'
+          to={`detail/id=${todo.id}`}
+        >
           <p>{todo.text}</p>
           <p>{todo.completed ? '완료' : '미완료'}</p>
-        </TaskLink>
+        </Link>
       </div>
 
       <div>
-        <Buttons
-          color='#e7582b'
+        <button
+          className='btn bg-[#e7582b] rounded-xl text-white'
           onClick={() => {
             handleToggle({
               id: todo.id,
@@ -30,33 +33,18 @@ const TodoItem = ({ todo }) => {
           }}
         >
           {todo.completed ? '취소' : '완료'}
-        </Buttons>
-        <Buttons
-          color='#582be7'
+        </button>
+        <button
+          className='btn bg-[#582be7] rounded-xl text-white'
+          color=''
           onClick={async () => {
             await deleteTodo(todo.id);
           }}
         >
           삭제
-        </Buttons>
+        </button>
       </div>
-    </Lists>
+    </li>
   );
 };
 export default TodoItem;
-
-const TaskLink = styled(Link)`
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Lists = styled.li`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;

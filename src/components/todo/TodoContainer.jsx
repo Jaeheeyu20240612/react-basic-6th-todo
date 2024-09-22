@@ -1,20 +1,15 @@
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoDashboard from './TodoDashboard';
-import styled from 'styled-components';
 
 const TodoContainer = () => {
   return (
-    <Container>
+    <div className='min-w-[800px]'>
       <TodoDashboard />
       <TodoForm />
       <TodoList />
-    </Container>
+    </div>
   );
 };
 
 export default TodoContainer;
-
-const Container = styled.div`
-  min-width: 800px;
-`;

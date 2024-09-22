@@ -8,14 +8,14 @@ const RootLayout = () => {
     <main
       className={`${
         darkMode
-          ? 'bg-black flex flex-col min-h-full justify-center items-center w-[7/10] border-3 my-1 mx-auto'
-          : 'bg-[#f7f6f9] flex flex-col min-h-full justify-center items-center w-[7/10] border-3 my-1 mx-auto'
+          ? 'bg-[#262626] flex flex-col min-h-full justify-center items-center w-[7/10] border-3 my-1 mx-auto mt-16'
+          : 'bg-[#f7f6f9] flex flex-col min-h-full justify-center items-center w-[7/10] border-3 my-1 mx-auto mt-16'
       }`}
     >
       <div
         className={`${
           darkMode
-            ? 'bg-black max-w-[1024px] mx-auto p-5'
+            ? 'bg-[dimgray] max-w-[1024px] rounded-lg mx-auto p-5'
             : 'max-w-[1024px] mx-auto p-5'
         }`}
       >
