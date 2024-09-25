@@ -1,6 +1,4 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Buttons } from '../ui/Buttons';
 import {
   useDeleteTodoMutation,
   useToggleTodoMutation,
@@ -15,7 +13,7 @@ const TodoItem = ({ todo }) => {
       <div style={{ marginRight: 'auto' }}>
         <Link
           className='flex flex-row gap-[1em] hover:underline'
-          to={`detail/id=${todo.id}`}
+          to={`detail?id=${todo.id}`}
         >
           <p>{todo.text}</p>
           <p>{todo.completed ? '완료' : '미완료'}</p>

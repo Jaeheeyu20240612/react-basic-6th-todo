@@ -2,6 +2,7 @@ import Router from './components/Router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import useThemeStore from './store/useThemeStore';
 import { useEffect } from 'react';
+import Toaster from './components/Toaster';
 
 const queryClient = new QueryClient();
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router />;
+      <Toaster />
     </QueryClientProvider>
   );
 };

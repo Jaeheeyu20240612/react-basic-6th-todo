@@ -1,23 +1,12 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postTodo } from '../../api/todoClient';
 import useThemeStore from '../../store/useThemeStore';
+import { useCreateTodoMutation } from '../../hooks/useTodoMutation';
 
 const TodoForm = () => {
   const { darkMode } = useThemeStore();
   const [text, setText] = useState('');
-  const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
-    mutationFn: (newTodoObj) => postTodo(newTodoObj),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['todos'],
-      });
-      setText('');
-    },
-  });
-
+  const { mutate } = useCreateTodoMutation();
   const newTodo = {
     text,
     isCompleted: false,

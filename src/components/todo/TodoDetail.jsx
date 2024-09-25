@@ -14,8 +14,13 @@ const TodoDetail = () => {
   const { data: completedTodos } = useTodoQuery('completed');
   const { data: pendingTodos } = useTodoQuery('pending');
 
+  const selectedTodo = id
+    ? allTodos.find((todo) => todo.id === Number(id))
+    : null;
   let detailTodos = [];
-  if (filtered === 'completed') {
+  if (selectedTodo) {
+    detailTodos = [selectedTodo];
+  } else if (filtered === 'completed') {
     detailTodos = allTodos.filter((todo) => todo.completed);
   } else if (filtered === 'pending') {
     detailTodos = allTodos.filter((todo) => todo.completed === false);
