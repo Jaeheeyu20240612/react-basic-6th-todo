@@ -28,7 +28,7 @@ const TodoForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type='text' name='title' />
+      <input className='text-black' type='text' name='title' />
       <button type='submit'>추가</button>
     </form>
   );

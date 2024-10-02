@@ -1,4 +1,5 @@
 import { getTodoDetail } from '@/app/api/todo-api';
+import TodoItem from '@/app/components/todos/TodoItem';
 import {
   dehydrate,
   HydrationBoundary,
@@ -14,14 +15,14 @@ const TodoDetailPage = async ({ params }: TodoProps) => {
   const { id } = params;
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchInfiniteQuery({
+  await queryClient.prefetchQuery({
     queryKey: ['todos', id],
     queryFn: () => getTodoDetail(id),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div>TodoDetailPage</div>
+      <TodoItem id={id} />
     </HydrationBoundary>
   );
 };

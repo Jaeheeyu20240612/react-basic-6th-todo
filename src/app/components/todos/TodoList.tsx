@@ -1,8 +1,9 @@
+'use client';
 import { getTodos } from '../../api/todo-api';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
-const TodoList = async () => {
+const TodoList = () => {
   const { data: todos } = useQuery({
     queryKey: ['todos'],
     queryFn: getTodos,
@@ -10,10 +11,10 @@ const TodoList = async () => {
   return (
     <div>
       <ul>
-        {todos?.map((todo) => (
-          <li key={todo.id}>
-            <Link href={`/detail/${todo.id}`}>
-              {todo.title} - {todo.completed ? '완료' : '미완료'}
+        {todos?.map(({ id, completed, title }) => (
+          <li key={id}>
+            <Link href={`/detail/${id}`}>
+              {title} - {completed ? '완료' : '미완료'}
             </Link>
           </li>
         ))}
