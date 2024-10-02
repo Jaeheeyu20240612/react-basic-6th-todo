@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { todo } from '../types/todo-type';
 import { addTodo } from '../api/todo-api';
 
 const TodoForm = () => {
