@@ -1,5 +1,9 @@
-import { getTodo } from '@/app/api/todo-api';
-import { todo } from '@/app/types/todo-type';
+import { getTodoDetail } from '@/app/api/todo-api';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
 type TodoProps = {
   params: {
@@ -8,9 +12,17 @@ type TodoProps = {
 };
 const TodoDetailPage = async ({ params }: TodoProps) => {
   const { id } = params;
+  const queryClient = new QueryClient();
 
-  const data = await getTodo(id);
-  return <div>{id} </div>;
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ['todos'],
+    queryFn: getTodoDetail(id),
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div>TodoDetailPage</div>
+    </HydrationBoundary>
+  );
 };
-
 export default TodoDetailPage;
