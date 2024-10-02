@@ -15,8 +15,8 @@ const TodoDetailPage = async ({ params }: TodoProps) => {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ['todos'],
-    queryFn: getTodoDetail(id),
+    queryKey: ['todos', id],
+    queryFn: () => getTodoDetail(id),
   });
 
   return (
