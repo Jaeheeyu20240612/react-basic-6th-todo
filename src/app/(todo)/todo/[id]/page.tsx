@@ -1,5 +1,6 @@
 import { getTodoDetail } from '@/app/api/todo-api';
 import TodoItem from '@/app/components/todos/TodoItem';
+import { Todo } from '@/app/types/todo-type';
 import {
   dehydrate,
   HydrationBoundary,
@@ -20,9 +21,10 @@ const TodoDetailPage = async ({ params }: TodoProps) => {
     queryFn: () => getTodoDetail(id),
   });
 
+  const todo = queryClient.getQueryData<Todo>(['todos', id]);
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <TodoItem id={id} />
+      {todo ? <TodoItem todo={todo} /> : <div></div>}
     </HydrationBoundary>
   );
 };

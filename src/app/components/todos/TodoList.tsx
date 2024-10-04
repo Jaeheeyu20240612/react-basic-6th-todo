@@ -1,21 +1,16 @@
 'use client';
-import { getTodos } from '../../api/todo-api';
-import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
+
+import { useTodoQuery } from '@/app/query/useTodoQuery';
+import TodoItem from './TodoItem';
 
 const TodoList = () => {
-  const { data: todos } = useQuery({
-    queryKey: ['todos'],
-    queryFn: getTodos,
-  });
+  const { data: todos } = useTodoQuery();
   return (
     <div>
-      <ul>
-        {todos?.map(({ id, completed, title }) => (
-          <li key={id}>
-            <Link href={`/detail/${id}`}>
-              {title} - {completed ? '완료' : '미완료'}
-            </Link>
+      <ul className='flex flex-col gap-2'>
+        {todos?.map((todo) => (
+          <li key={todo.id}>
+            <TodoItem todo={todo} />
           </li>
         ))}
       </ul>

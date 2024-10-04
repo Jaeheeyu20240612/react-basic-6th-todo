@@ -1,21 +1,37 @@
 'use client';
 
-import { getTodoDetail } from '@/app/api/todo-api';
+import {
+  useDeleteTodoMutation,
+  useToggleTodoMutation,
+} from '@/app/query/useTodoMutation';
 import { Todo } from '@/app/types/todo-type';
-import { useQuery } from '@tanstack/react-query';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface TodoItemProps {
-  id: Todo['id'];
+  todo: Todo;
 }
 
-const TodoItem = ({ id }: TodoItemProps) => {
-  const { data: todo } = useQuery({
-    queryKey: ['todos', id],
-    queryFn: () => getTodoDetail(id),
-  });
+const TodoItem = ({ todo }: TodoItemProps) => {
+  const { mutate: deleteTodo } = useDeleteTodoMutation();
+  const { mutate: toggleTodo } = useToggleTodoMutation();
   return (
-    <div>
-      {todo?.title} - {todo?.completed ? '완료' : '미완료'}
+    <div className='flex flex-row justify-between items-center rounded-2xl bg-[#f5f5f5] p-4 hover:bg-[#ebebeb]'>
+      <Link className='hover:underline' href={`/todo/${todo?.id}`}>
+        {todo?.title}
+      </Link>
+      <div className='flex flex-row gap-2'>
+        <Button variant='destructive' onClick={() => deleteTodo(todo?.id)}>
+          삭제
+        </Button>
+        <Button
+          onClick={() =>
+            toggleTodo({ id: todo?.id, completed: !todo?.completed })
+          }
+        >
+          {todo?.completed ? '완료' : '미완료'}
+        </Button>
+      </div>
     </div>
   );
 };

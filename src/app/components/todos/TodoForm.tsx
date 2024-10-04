@@ -1,35 +1,39 @@
 'use client';
-import React from 'react';
-import { addTodo } from '../../api/todo-api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { useAddMutation } from '@/app/query/useTodoMutation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const TodoForm = () => {
-  const queryClient = useQueryClient();
-  const { mutateAsync } = useMutation({
-    mutationFn: addTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['todos'],
-      });
-    },
-  });
+  const { mutateAsync: addTodo } = useAddMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const title = formData.get('title')?.toString().trim();
+
     if (!title) return;
 
-    await mutateAsync(title);
+    await addTodo(title);
 
-    (e.target as HTMLFormElement).reset();
+    form.reset();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input className='text-black' type='text' name='title' />
-      <button type='submit'>추가</button>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
+      <Input
+        className='text-black'
+        type='text'
+        name='title'
+        placeholder='할 일을 입력하세요.'
+      />
+      <div className='text-right'>
+        <Button className='w-fit' type='submit'>
+          추가
+        </Button>
+      </div>
     </form>
   );
 };
