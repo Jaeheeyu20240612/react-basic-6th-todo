@@ -1,7 +1,13 @@
 import { Todo } from '../types/todo-type';
 
-export const getTodos = async (): Promise<Todo[]> => {
-  const res = await fetch('http://localhost:3000/todos');
+export const getTodos = async (filter?: 'completed' | 'pending') => {
+  const todoURL = new URL('http://localhost:3000/todos');
+  if (filter === 'completed') todoURL.searchParams.set('completed', 'true');
+  if (filter === 'pending') todoURL.searchParams.set('completed', 'false');
+
+  const res = await fetch(todoURL.toString(), {
+    cache: 'no-store',
+  });
   const data: Todo[] = await res.json();
   return data;
 };
