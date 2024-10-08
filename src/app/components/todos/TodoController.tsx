@@ -11,8 +11,8 @@ const TodoController = () => {
   const { data: allTodos } = useTodoQuery();
   const { data: completedTodos } = useTodoQuery('completed');
   return (
-    <div className='flex flex-row justify-between px-4'>
-      <p className='mb-72'>
+    <div className='flex flex-row justify-between px-4 items-center'>
+      <p className='mb-2'>
         {completedTodos?.length}/{allTodos?.length}
       </p>
       <div className='flex items-center space-x-2'>
