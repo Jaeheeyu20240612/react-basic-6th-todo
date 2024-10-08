@@ -13,8 +13,18 @@ const queryClient = new QueryClient();
 
 const TodoPage = async () => {
   await queryClient.prefetchQuery({
-    queryKey: ['todos'],
-    queryFn: getTodos,
+    queryKey: ['todos', 'pending'],
+    queryFn: () => getTodos('pending'),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['todos', 'completed'],
+    queryFn: () => getTodos('completed'),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['todos', undefined],
+    queryFn: () => getTodos(),
   });
 
   return (

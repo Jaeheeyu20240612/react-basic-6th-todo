@@ -2,9 +2,15 @@
 
 import { useTodoQuery } from '@/app/query/useTodoQuery';
 import TodoItem from './TodoItem';
+import { useTodoStore } from '@/app/store/useTodoStore';
 
 const TodoList = () => {
-  const { data: todos } = useTodoQuery();
+  const { completed } = useTodoStore();
+  const { data: todos, isLoading } = useTodoQuery(
+    completed ? 'completed' : 'pending'
+  );
+
+  if (isLoading) return <div>Loading...</div>;
   return (
     <div>
       <ul className='flex flex-col gap-2'>
