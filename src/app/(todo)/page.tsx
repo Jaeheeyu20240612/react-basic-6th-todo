@@ -7,6 +7,7 @@ import { getTodos } from '../api/todo-api';
 import TodoList from '../components/todos/TodoList';
 import TodoForm from '../components/todos/TodoForm';
 import { Separator } from '@/components/ui/separator';
+import TodoController from '../components/todos/TodoController';
 
 const queryClient = new QueryClient();
 
@@ -24,7 +25,10 @@ const TodoPage = async () => {
         </section>
         <Separator />
 
-        <TodoList />
+        <div>
+          <TodoController />
+          <TodoList />
+        </div>
         <TodoForm />
       </div>
     </HydrationBoundary>
