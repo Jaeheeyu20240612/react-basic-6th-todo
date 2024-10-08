@@ -28,7 +28,7 @@
     {
       "id": "a19b",
       "title": "536",
-      "completed": true
+      "completed": false
     },
     {
       "id": "5731",
@@ -48,7 +48,7 @@
     {
       "id": "35bc",
       "title": "ㄴㄴㄴ",
-      "completed": false
+      "completed": true
     }
   ]
 }
